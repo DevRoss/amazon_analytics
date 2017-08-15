@@ -1,7 +1,8 @@
 # coding: utf-8
 from django.db import models
-from django.contrib.auth.models import AbstractUser, AbstractBaseUser, PermissionsMixin, BaseUserManager, UserManager, \
-    User
+from django.contrib.auth.models import AbstractUser, \
+    AbstractBaseUser, PermissionsMixin, BaseUserManager, \
+    UserManager, User
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -27,12 +28,16 @@ class AmazonUserManager(BaseUserManager):
         return user
 
     def create_user(self, phone, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(phone, password, **extra_fields)
 
     def create_superuser(self, phone, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
@@ -48,7 +53,7 @@ class AbstractAmazonUser(AbstractBaseUser, PermissionsMixin):
     )
 
     phone = models.CharField(max_length=16, name='phone', db_index=True, unique=True)
-    type = models.CharField(max_length=2, choices=TYPE_CHOICE, default=BASIC, name='type')
+    member = models.CharField(max_length=2, choices=TYPE_CHOICE, default=BASIC, name='member')
     is_active = models.BooleanField(
         _('active'),
         default=True,
@@ -56,6 +61,11 @@ class AbstractAmazonUser(AbstractBaseUser, PermissionsMixin):
             'Designates whether this user should be treated as active. '
             'Unselect this instead of deleting accounts.'
         ),
+    )
+    is_staff = models.BooleanField(
+        _('staff status'),
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
     )
 
     object = AmazonUserManager()
@@ -66,6 +76,14 @@ class AbstractAmazonUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('user')
         verbose_name_plural = _('users')
         abstract = True
+
+    def get_short_name(self):
+        """return a phone"""
+        return self.phone
+
+    def get_full_name(self):
+        """return a phone"""
+        return self.phone
 
 
 class AmazonUser(AbstractAmazonUser):

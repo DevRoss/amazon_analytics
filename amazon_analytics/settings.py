@@ -63,7 +63,7 @@ ROOT_URLCONF = 'amazon_analytics.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [(os.path.join(BASE_DIR, 'templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug': DEBUG,
         },
     },
 ]
@@ -124,6 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+# TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
 AUTH_USER_MODEL = 'user.AmazonUser'
