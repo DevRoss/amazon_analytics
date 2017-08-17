@@ -130,7 +130,9 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'user.AmazonUser'
 
 # file upload directory
-FILE_URL = '/file/'
+FILE_URL = 'file/'
+KEYWORD_FILE_URL = os.path.join(FILE_URL, 'kw')
+TOPSELLER_FILE_URL = os.path.join(FILE_URL, 'top')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
