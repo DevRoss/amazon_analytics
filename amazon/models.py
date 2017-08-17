@@ -1,6 +1,5 @@
 from django.db import models
 from user.models import AmazonUser
-from amazon_analytics.settings import FILE_URL
 import os
 from amazon_analytics.settings import TOPSELLER_FILE_URL, KEYWORD_FILE_URL
 
