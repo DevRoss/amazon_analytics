@@ -55,7 +55,7 @@ class AddKeyword(CreateAPIView):
             keyword = serializer.validated_data.get('keyword')
 
             try:
-                obj = keyword.objects.get(user=user, title=keyword)
+                obj = Keyword.objects.get(user=user, title=keyword)
             except Keyword.DoesNotExist:
                 # 关键词不存在
                 print('does not exist')
@@ -82,7 +82,6 @@ class GetTimeTop(APIView):
         # print(self.queryset.count())
         serializer = TimeTopSerializer(data=request.GET.dict())
         if serializer.is_valid(raise_exception=True):
-
             # do something
             print(obj.result_file)
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
