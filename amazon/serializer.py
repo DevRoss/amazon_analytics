@@ -1,6 +1,6 @@
 from rest_framework import serializers
 import datetime
-from .models import Keyword
+from .models import Keyword, TopSeller
 from rest_framework.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
@@ -20,3 +20,18 @@ class AddTopSellerSerializer(serializers.Serializer):
 
 class AddKeywordSerializer(serializers.Serializer):
     keyword = serializers.CharField()
+
+
+class TimeTopSerializer(serializers.Serializer):
+    now = datetime.datetime.now().date()
+    category = serializers.CharField()
+    end_time = serializers.DateField(allow_null=True, required=False,
+                                     default=now)
+    start_time = serializers.DateField(allow_null=True, required=False)
+
+    def validate(self, obj):
+        if not obj.get('start_time'):
+            obj['start_time'] = obj['end_time'] - datetime.timedelta(days=30)
+        # # 将category修改为 title 对应数据库表
+        # obj.update(title=obj.pop('category'))
+        return obj
