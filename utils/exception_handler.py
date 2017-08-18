@@ -2,7 +2,7 @@ from rest_framework.views import exception_handler
 from rest_framework import exceptions
 from django.http.response import Http404
 from django.core.exceptions import PermissionDenied
-
+from . import extra_exceptions
 """
 +-----------------------+----------------+
 |       exception       |   error_code   |
@@ -57,6 +57,9 @@ def custom_exception_handler(exc, context):
 
     elif isinstance(exc, exceptions.UnsupportedMediaType):
         response.data['error_code'] = 12
+
+    elif isinstance(exc, extra_exceptions.ItemExists):
+        response.data['error_code'] = 13
 
     elif isinstance(exc, PermissionDenied):
         response.data['error_code'] = 20
