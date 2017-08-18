@@ -89,12 +89,12 @@ class AddKeyword(CreateAPIView):
 class GetTimeTop(APIView):
     def get(self, request, *args, **kwargs):
         category = request.GET.get('category')
+        user =request.user
         try:
-            obj = TopSeller.objects.get(user=request.user, title=category)
+            obj = TopSeller.objects.get(user=user, title=category)
         except TopSeller.DoesNotExist:
             # 用户没有添加任务，返回403
-            return Response(status=status.HTTP_403_FORBIDDEN)
-        # print(self.queryset.count())
+            raise extra_exceptions.ItemDoesNotExist('This category does not exist.')
         serializer = TimeTopSerializer(data=request.GET.dict())
         if serializer.is_valid(raise_exception=True):
             # do something
