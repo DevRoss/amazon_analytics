@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="547ba5ac-5d05-43ec-8b0b-f746904b9527" name="Default" comment="modify and simplify add topseller and keyword api">
+    <list default="true" id="547ba5ac-5d05-43ec-8b0b-f746904b9527" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazon/urls.py" afterPath="$PROJECT_DIR$/amazon/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazon/views.py" afterPath="$PROJECT_DIR$/amazon/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/exception_handler.py" afterPath="$PROJECT_DIR$/utils/exception_handler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/extra_exceptions.py" afterPath="$PROJECT_DIR$/utils/extra_exceptions.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,59 +34,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/amazon/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+            <state relative-caret-position="70">
+              <caret line="88" column="28" lean-forward="false" selection-start-line="88" selection-start-column="28" selection-end-line="88" selection-end-column="28" />
               <folding>
                 <element signature="e#16#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="exception_handler.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/utils/exception_handler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1925">
-              <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#50#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="extra_exceptions.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/extra_exceptions.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#50#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="parsers.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/parsers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="35">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/amazon/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="6" column="10" lean-forward="true" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,8 +100,8 @@
         <option value="$PROJECT_DIR$/amazon_analytics/settings.py" />
         <option value="$PROJECT_DIR$/amazon/urls.py" />
         <option value="$PROJECT_DIR$/utils/extra_exceptions.py" />
-        <option value="$PROJECT_DIR$/amazon/views.py" />
         <option value="$PROJECT_DIR$/utils/exception_handler.py" />
+        <option value="$PROJECT_DIR$/amazon/views.py" />
       </list>
     </option>
   </component>
@@ -453,7 +404,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503038369278</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="modify ItemDoesNotExist exception">
+      <created>1503039761179</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1503039761179</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -533,7 +491,8 @@
     <MESSAGE value="Add plain/text parser support" />
     <MESSAGE value="Add ItemExists exception" />
     <MESSAGE value="modify and simplify add topseller and keyword api" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify and simplify add topseller and keyword api" />
+    <MESSAGE value="modify ItemDoesNotExist exception" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify ItemDoesNotExist exception" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -914,14 +873,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/parsers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="35">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/extra_exceptions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
@@ -932,22 +883,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/amazon/views.py">
+    <entry file="file://$PROJECT_DIR$/utils/parsers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-          <folding>
-            <element signature="e#16#25#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="35">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/exception_handler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1925">
+        <state relative-caret-position="-2261">
           <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/amazon/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="88" column="28" lean-forward="false" selection-start-line="88" selection-start-column="28" selection-end-line="88" selection-end-column="28" />
+          <folding>
+            <element signature="e#16#25#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -86,10 +86,10 @@ class AddKeyword(CreateAPIView):
                 return Response(ret_json, status=status.HTTP_201_CREATED, headers=self.headers)
 
 
-class GetTimeTop(APIView):
+class GetTimeTop(ListAPIView):
     def get(self, request, *args, **kwargs):
         category = request.GET.get('category')
-        user =request.user
+        user = request.user
         try:
             obj = TopSeller.objects.get(user=user, title=category)
         except TopSeller.DoesNotExist:
@@ -100,8 +100,6 @@ class GetTimeTop(APIView):
             # do something
             print(obj.result_file)
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class GetAmazonList(ListAPIView):
