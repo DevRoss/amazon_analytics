@@ -107,21 +107,23 @@ class GetAmazonList(ListAPIView):
         user = request.user
         category = request.GET.get('category')
         keyword = request.GET.get('keyword')
-
+        result_file = list()
         obj = ModelObject()
         if category:
             if obj.has_data(TopSeller, user=user, title=category):
-                result_file = obj.instance.result_file
+                result_file.append(obj.instance.result_file)
                 print(result_file)
-                return Response(result_file, status=status.HTTP_200_OK)
             else:
-                return Response(status=status.HTTP_403_FORBIDDEN)
-        elif keyword:
+                raise extra_exceptions.ItemDoesNotExist('This category does not exist.')
+
+        if keyword:
             if obj.has_data(Keyword, user=user, title=keyword):
-                result_file = obj.instance.result_file
+                result_file.append(obj.instance.result_file)
                 print(result_file)
-                return Response(result_file, status=status.HTTP_200_OK)
             else:
-                return Response(status=status.HTTP_403_FORBIDDEN)
-        else:
-            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
+                raise extra_exceptions.ItemDoesNotExist('This keyword does not exist.')
+
+        if not result_file:
+            raise exceptions.ParseError('Please add either a category or a keyword.')
+
+        return Response(result_file.__str__(), status=status.HTTP_200_OK)
