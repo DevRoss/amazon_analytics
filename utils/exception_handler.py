@@ -33,10 +33,8 @@ def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
 
     # 扩展原来的exception, 添加error_code
-    if isinstance(exc, exceptions.APIException):
-        response.data['error_code'] = 1
 
-    elif isinstance(exc, Http404):
+    if isinstance(exc, Http404):
         response.data['error_code'] = 2
 
     elif isinstance(exc, exceptions.NotFound):
