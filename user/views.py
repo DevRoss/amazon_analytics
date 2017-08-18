@@ -19,6 +19,10 @@ class Login(APIView):
 
     # {"phone":"12345678901","password":"abc12345"}
     def post(self, request):
+        """
+
+        http://127.0.0.1:8000/api-auth/login
+        """
         username = request.data.get('phone')
         password = request.data.get('password')
         print(username)
@@ -41,6 +45,10 @@ class Logout(APIView):
     authentication_classes = (SessionAuthentication,)
 
     def get(self, request):
+        """
+
+        http://127.0.0.1:8000/api-auth/logout
+        """
         logout(request)
         ret_json = {
             "error_code": 0,

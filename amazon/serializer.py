@@ -32,6 +32,4 @@ class TimeTopSerializer(serializers.Serializer):
     def validate(self, obj):
         if not obj.get('start_time'):
             obj['start_time'] = obj['end_time'] - datetime.timedelta(days=30)
-        # # 将category修改为 title 对应数据库表
-        # obj.update(title=obj.pop('category'))
         return obj
