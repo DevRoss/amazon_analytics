@@ -33,26 +33,30 @@ class ModelObject:
             return False
 
 
-# /api/v1/topseller?category=<category>&strat_time=<20170101>&end_time=<20170201>
 class AddTopSeller(CreateAPIView):
     serializer_class = AddTopSellerSerializer
 
     def post(self, request, *args, **kwargs):
+        """
+
+            http://127.0.0.1:8000/api/v1/add-topseller
+        """
         serializer = AddTopSellerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            user = request.user
-            category = serializer.validated_data.get('category')
-            start_time = serializer.validated_data.get('start_time')
-            end_time = serializer.validated_data.get('end_time')
+            user = request.user  # 获取登录用户
+            category = serializer.validated_data.get('category')  # 在post表单中的到category
+            start_time = serializer.validated_data.get('start_time')  # 在post表单中的到start_time, 没有的话返回None
+            end_time = serializer.validated_data.get('end_time')  # 在post表单中的到end_time, 没有的话返回None
             obj = ModelObject()
             if obj.has_data(TopSeller, user=user, title=category):
+                # 关键词存在
                 raise extra_exceptions.ItemExists('This TopSeller is already exists.')
             else:
                 # 关键词不存在
                 obj = TopSeller(user=user, title=category,
                                 result_file=os.path.join(TOPSELLER_FILE_URL, user.phone, category))
                 obj.save()
-                print('does not exist')
+                # print('does not exist')
                 ret_json = {
                     "error_code": 0,
                     "detail": category + " is created",
@@ -66,16 +70,21 @@ class AddKeyword(CreateAPIView):
     serializer_class = AddKeywordSerializer
 
     def post(self, request, *args, **kwargs):
-        user = request.user
+        """
+
+            http://127.0.0.1:8000/api/v1/add-keyword
+        """
+        user = request.user  # 获取登录用户
         serializer = AddKeywordSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             keyword = serializer.validated_data.get('keyword')
             obj = ModelObject()
             if obj.has_data(Keyword, user=user, title=keyword):
+                # 关键词存在
                 raise extra_exceptions.ItemExists('This Keyword is already exists.')
             else:
                 # 关键词不存在
-                print('does not exist')
+                # print('does not exist')
 
                 obj = Keyword(user=user, title=keyword, result_file=os.path.join(KEYWORD_FILE_URL, user.phone, keyword))
                 obj.save()
@@ -88,12 +97,17 @@ class AddKeyword(CreateAPIView):
 
 class GetTimeTop(ListAPIView):
     def get(self, request, *args, **kwargs):
-        category = request.GET.get('category')
-        user = request.user
+        """
+
+        http://127.0.0.1:8000/api/v1/get-topseller?category=123412342134123&start_time=2017-1-2
+        end_time 默认为今天
+        start_time 默认为 end_time - 30天
+        """
+        category = request.GET.get('category')  # 在url中获取 category
+        user = request.user  # 获取登录用户
         try:
             obj = TopSeller.objects.get(user=user, title=category)
         except TopSeller.DoesNotExist:
-            # 用户没有添加任务，返回403
             raise extra_exceptions.ItemDoesNotExist('This category does not exist.')
         serializer = TimeTopSerializer(data=request.GET.dict())
         if serializer.is_valid(raise_exception=True):
@@ -104,26 +118,29 @@ class GetTimeTop(ListAPIView):
 
 class GetAmazonList(ListAPIView):
     def get(self, request, *args, **kwargs):
+        """
+        http://127.0.0.1:8000/api/v1/get-amazonlist?category=123123&keyword=123123
+        """
         user = request.user
         category = request.GET.get('category')
         keyword = request.GET.get('keyword')
-        result_file = list()
+        result_file_list = list()
         obj = ModelObject()
         if category:
             if obj.has_data(TopSeller, user=user, title=category):
-                result_file.append(obj.instance.result_file)
-                print(result_file)
+                result_file_list.append(obj.instance.result_file)  # 将category 的result_file 加入 result_file_list
+                # print(result_file)
             else:
                 raise extra_exceptions.ItemDoesNotExist('This category does not exist.')
 
         if keyword:
             if obj.has_data(Keyword, user=user, title=keyword):
-                result_file.append(obj.instance.result_file)
-                print(result_file)
+                result_file_list.append(obj.instance.result_file)  # 将keyword的result_file 加入 result_file_list
+                # print(result_file)
             else:
                 raise extra_exceptions.ItemDoesNotExist('This keyword does not exist.')
 
-        if not result_file:
+        if not result_file_list:
             raise exceptions.ParseError('Please add either a category or a keyword.')
 
-        return Response(result_file.__str__(), status=status.HTTP_200_OK)
+        return Response(result_file_list.__str__(), status=status.HTTP_200_OK)
