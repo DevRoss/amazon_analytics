@@ -10,6 +10,8 @@ from .serializer import AddTopSellerSerializer, AddKeywordSerializer, TimeTopSer
 from .models import TopSeller, Keyword
 import datetime
 from amazon_analytics.settings import KEYWORD_FILE_URL, TOPSELLER_FILE_URL
+from rest_framework import exceptions
+from utils import extra_exceptions
 
 
 class ModelObject:
@@ -33,7 +35,6 @@ class ModelObject:
 
 # /api/v1/topseller?category=<category>&strat_time=<20170101>&end_time=<20170201>
 class AddTopSeller(CreateAPIView):
-    parser_classes = (JSONParser,)
     serializer_class = AddTopSellerSerializer
 
     def post(self, request, *args, **kwargs):
@@ -43,10 +44,10 @@ class AddTopSeller(CreateAPIView):
             category = serializer.validated_data.get('category')
             start_time = serializer.validated_data.get('start_time')
             end_time = serializer.validated_data.get('end_time')
-
-            try:
-                obj = TopSeller.objects.get(user=user, title=category)
-            except TopSeller.DoesNotExist:
+            obj = ModelObject()
+            if obj.has_data(TopSeller, user=user, title=category):
+                raise extra_exceptions.ItemExists('This TopSeller is already exists.')
+            else:
                 # 关键词不存在
                 obj = TopSeller(user=user, title=category,
                                 result_file=os.path.join(TOPSELLER_FILE_URL, user.phone, category))
@@ -59,12 +60,9 @@ class AddTopSeller(CreateAPIView):
                     "end_time": end_time,
                 }
                 return Response(ret_json, status=status.HTTP_201_CREATED, headers=self.headers)
-            return Response('This category already exists', status=status.HTTP_400_BAD_REQUEST)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class AddKeyword(CreateAPIView):
-    parser_classes = (JSONParser,)
     serializer_class = AddKeywordSerializer
 
     def post(self, request, *args, **kwargs):
@@ -72,10 +70,10 @@ class AddKeyword(CreateAPIView):
         serializer = AddKeywordSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             keyword = serializer.validated_data.get('keyword')
-
-            try:
-                obj = Keyword.objects.get(user=user, title=keyword)
-            except Keyword.DoesNotExist:
+            obj = ModelObject()
+            if obj.has_data(Keyword, user=user, title=keyword):
+                raise extra_exceptions.ItemExists('This Keyword is already exists.')
+            else:
                 # 关键词不存在
                 print('does not exist')
 
@@ -86,8 +84,6 @@ class AddKeyword(CreateAPIView):
                     "detail": keyword + " is created",
                 }
                 return Response(ret_json, status=status.HTTP_201_CREATED, headers=self.headers)
-            return Response('This category already exists', status=status.HTTP_400_BAD_REQUEST)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetTimeTop(APIView):
