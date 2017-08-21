@@ -19,6 +19,6 @@ import user.urls
 import amazon.urls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'api-auth', include(user.urls)),
-    url(r'api/v1', include(amazon.urls)),
+    url(r'^api-auth', include(user.urls)),
+    url(r'^api/v1', include(amazon.urls)),
 ]
