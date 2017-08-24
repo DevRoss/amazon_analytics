@@ -2,3 +2,6 @@ django
 djangorestframework
 django-cors-headers
 pymysql
+channels
+asgi_redis
+daphne
